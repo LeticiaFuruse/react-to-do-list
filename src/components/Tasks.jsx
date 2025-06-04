@@ -1,15 +1,17 @@
 function Tasks(props){
-    console.log(props)
-    return(
-        <div>
-            <ul>{props.tasks.map((task => 
-                (<li key={task.id}>
-                    <button>{task.title}</button> 
+    return (
+            <ul>{props.tasks.map((task) => (
+                <li key={task.id}>
+                    <button onClick={() => props.onTaskClick(task.id)}
+                        >
+                        {task.title}
+                        {task.isCompleted ? "Concluida" : "Pendente"}
+                        </button> 
                     <button>Ver detalhes</button>
                 </li>
-                )))}
+                ))}
             </ul>
-        </div>
+        
     )
 }
 export default Tasks

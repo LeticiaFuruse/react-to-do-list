@@ -8,34 +8,44 @@ function App() {
     {
       id: 1,
       title: "estudar",
-      description: "estudar react"
+      description: "estudar react",
+      isCompleted: false
     },
     {
-      id: 1,
+      id: 2,
       title: "estudar2",
-      description: "estudar react"
+      description: "estudar react",
+      isCompleted: false
     },
     {
-      id: 1,
+      id: 3,
       title: "estudar3",
-      description: "estudar react"
+      description: "estudar react",
+      isCompleted: false
     }
   ])
 
   function onTaskClick(taskId){
-    const newTask = tasks.map(tasks =>{
-      //
-      if (task.id == tasksID){
-        //
+    const newTask = tasks.map(task =>{
+      //preciso atualizar essa tarefa
+      if (task.id === taskId){
+        return{
+          ...task,
+          isCompleted: !task.isCompleted
+        }
       }
+      // não precisa atualizar essa tarefa
+        return task
     })
+
+    setTasks(newTask)
   }
 
   return (
     <>
       <h1>Gerenciador de tarefas</h1>
       {/* <AddTask /> */}
-      <Tasks tasks = {tasks} />
+      <Tasks tasks={tasks} onTaskClick={onTaskClick} />
     </>
   )
 }
