@@ -2,7 +2,8 @@
 
 Criando um TODO-LIST com react + vite 
 
-
+Veja o projeto finalizado clicando aqui: 
+- [Acesse o projeto finalizado, online]()
 
 
 
