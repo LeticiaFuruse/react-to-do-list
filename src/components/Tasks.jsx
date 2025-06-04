@@ -1,13 +1,14 @@
-function Tasks(props){
+function Tasks({tasks, onTaskClick, onDeleteTaskClick}) {
     return (
-            <ul>{props.tasks.map((task) => (
+            <ul>{tasks.map((task) => (
                 <li key={task.id}>
-                    <button onClick={() => props.onTaskClick(task.id)}
+                    <button onClick={() => onTaskClick(task.id)}
                         >
-                        {task.title}
+                        {task.title} -
                         {task.isCompleted ? "Concluida" : "Pendente"}
                         </button> 
-                    <button>Ver detalhes</button>
+                    <button>Detalhes</button>
+                    <button onClick={() => onDeleteTaskClick(task.id)}>Excluir</button>
                 </li>
                 ))}
             </ul>

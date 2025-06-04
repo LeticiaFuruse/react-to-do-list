@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import Tasks from './components/Tasks'
 import AddTask from './components/AddTask'
+import {v4} from 'uuid'
 
 function App() {
   const [tasks, setTasks] = useState([
@@ -25,6 +26,7 @@ function App() {
     }
   ])
 
+  // atualizar tarefa
   function onTaskClick(taskId){
     const newTask = tasks.map(task =>{
       //preciso atualizar essa tarefa
@@ -40,12 +42,29 @@ function App() {
 
     setTasks(newTask)
   }
+// ao clicar ele exclui
+function onDeleteTaskClick(taskId) {
+  const newTasks = tasks.filter(task => task.id !== taskId)
+  setTasks(newTasks)
+}
+
+
+// ao clicar no botao ele adiciona tarefa
+function onAddTaskSubmit(title, description) {
+   const newTask = {
+    id: v4(),
+    title: title,
+    description: description,
+    isCompleted: false
+   }
+   setTasks([...tasks, newTask])
+}
 
   return (
     <>
       <h1>Gerenciador de tarefas</h1>
-      {/* <AddTask /> */}
-      <Tasks tasks={tasks} onTaskClick={onTaskClick} />
+      <AddTask onAddTaskSubmit={onAddTaskSubmit}/>
+      <Tasks tasks={tasks} onTaskClick={onTaskClick} onDeleteTaskClick={onDeleteTaskClick} />
     </>
   )
 }
