@@ -1,71 +1,90 @@
 import { useState } from 'react'
-import './App.css'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { Container, Typography, CssBaseline, Box } from '@mui/material'
 import Tasks from './components/Tasks'
 import AddTask from './components/AddTask'
 import {v4} from 'uuid'
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#1976d2',
+    },
+    secondary: {
+      main: '#dc004e',
+    },
+    background: {
+      default: '#f5f5f5',
+    },
+  },
+});
+
 function App() {
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      title: "estudar",
-      description: "estudar react",
-      isCompleted: false
-    },
-    {
-      id: 2,
-      title: "estudar2",
-      description: "estudar react",
-      isCompleted: false
-    },
-    {
-      id: 3,
-      title: "estudar3",
-      description: "estudar react",
-      isCompleted: false
-    }
-  ])
+  const [tasks, setTasks] = useState([])
 
   // atualizar tarefa
   function onTaskClick(taskId){
     const newTask = tasks.map(task =>{
-      //preciso atualizar essa tarefa
       if (task.id === taskId){
         return{
           ...task,
           isCompleted: !task.isCompleted
         }
       }
-      // não precisa atualizar essa tarefa
-        return task
+      return task
     })
-
     setTasks(newTask)
   }
-// ao clicar ele exclui
-function onDeleteTaskClick(taskId) {
-  const newTasks = tasks.filter(task => task.id !== taskId)
-  setTasks(newTasks)
-}
 
+  function onDeleteTaskClick(taskId) {
+    const newTasks = tasks.filter(task => task.id !== taskId)
+    setTasks(newTasks)
+  }
 
-// ao clicar no botao ele adiciona tarefa
-function onAddTaskSubmit(title, description) {
-   const newTask = {
-    id: v4(),
-    title: title,
-    description: description,
-    isCompleted: false
-   }
-   setTasks([...tasks, newTask])
-}
+  function onAddTaskSubmit(title, description) {
+    const newTask = {
+      id: v4(),
+      title: title,
+      description: description,
+      isCompleted: false
+    }
+    setTasks([...tasks, newTask])
+  }
 
   return (
-    <>
-      <h1>Gerenciador de tarefas</h1>
-      <AddTask onAddTaskSubmit={onAddTaskSubmit}/>
-      <Tasks tasks={tasks} onTaskClick={onTaskClick} onDeleteTaskClick={onDeleteTaskClick} />
-    </>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Box
+        sx={{
+          width: '100vw',       // ocupa toda a largura da tela
+          height: '100vh',      // ocupa toda a altura da tela
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          bgcolor: 'background.default',
+        }}
+      >
+        <Container maxWidth="md">
+          <Box>
+            <Typography
+              variant="h3"
+              component="h1"
+              gutterBottom
+              align="center"
+              color="primary"
+            >
+              Gerenciador de Tarefas
+            </Typography>
+            <AddTask onAddTaskSubmit={onAddTaskSubmit} />
+            <Tasks
+              tasks={tasks}
+              onTaskClick={onTaskClick}
+              onDeleteTaskClick={onDeleteTaskClick}
+            />
+          </Box>
+        </Container>
+      </Box>
+    </ThemeProvider>
   )
 }
 
