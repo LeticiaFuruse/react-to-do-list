@@ -1,7 +1,14 @@
-function Tasks(){
+function Tasks(props){
+    console.log(props)
     return(
         <div>
-            <h1>Tasks</h1>
+            <ul>{props.tasks.map((task => 
+                (<li key={task.id}>
+                    <button>{task.title}</button> 
+                    <button>Ver detalhes</button>
+                </li>
+                )))}
+            </ul>
         </div>
     )
 }
